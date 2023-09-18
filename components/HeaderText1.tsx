@@ -1,11 +1,22 @@
-const HeaderText1 = ({ content }: { content: string }) => {
+import clsx from 'clsx';
+
+const HeaderText1 = ({
+  content,
+  className,
+}: {
+  content: string;
+  className: string;
+}) => {
   return (
     <>
-      <div className='flex flex-wrap text-left'>
-        <h1 className='mb-3 max-w-[75%] text-4xl font-bold leading-none tracking-tight text-[var(--black)]'>
-          {content}
-        </h1>
-      </div>
+      <h2
+        className={clsx(
+          'text-4xl font-bold leading-none tracking-tight text-[var(--black)]',
+          className
+        )}
+      >
+        {content}
+      </h2>
     </>
   );
 };

@@ -53,3 +53,60 @@ body {
     rgb(var(--background-start-rgb));
   */
 }
+
+@keyframes CardAnimation0 {
+  0% {
+    transform: none;
+  }
+  10% {
+    transform: translateY(100%);
+  }
+  15% {
+    transform: translateY(100%);
+  }
+  25% {
+    transform: translateY(200%);
+  }
+  50% {
+    transform: translateY(200%);
+  }
+  60% {
+    transform: translateY(100%);
+  }
+  65% {
+    transform: translateY(100%);
+  }
+  75% {
+    transform: none;
+  }
+}
+
+@keyframes CardAnimation1 {
+  0% {
+    transform: none;
+  }
+  10% {
+    transform: translateY(-100%);
+  }
+  65% {
+    transform: translateY(-100%);
+  }
+  75% {
+    transform: none;
+  }
+}
+
+@keyframes CardAnimation2 {
+  15% {
+    transform: none;
+  }
+  25% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(-100%);
+  }
+  60% {
+    transform: none;
+  }
+}

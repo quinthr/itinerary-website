@@ -47,7 +47,7 @@ const Button: FC<ButtonProps> = ({ children, className, intent, ...props }) => {
   return (
     <>
       <button className={buttonClasses({ intent, className })} {...props}>
-        <div className='flex-shrink-1 flex-grow-1 min-w-0'>
+        <div className='flex-shrink-1 min-w-0 flex-grow'>
           <div className='flex min-w-0 items-center justify-center text-base font-bold'>
             <span className='overflow-hidden text-ellipsis whitespace-nowrap'>
               {children}
