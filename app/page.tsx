@@ -7,6 +7,8 @@ import Image from 'next/image';
 import ParagraphText from '@/components/ParagraphText';
 import CardAnimation from '@/components/CardAnimation';
 import FeatureBox from '@/components/FeatureBox';
+import BeforeFooterText from '@/components/BeforeFooterText';
+import Footer from '@/components/Footer';
 
 const features = [
   {
@@ -137,7 +139,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className='z-[4] mx-auto w-full max-w-7xl flex-grow border-t-[1px] border-solid border-[#dee2e6] px-20 py-[120px]'>
+      <div className='z-[4] mx-auto w-full max-w-7xl flex-grow border-t-[1px] border-solid border-[#dee2e6] px-20 pb-[120px] pt-[240px]'>
         <div className='mt-30 z-[4]'>
           <div className='relative w-full max-w-full px-4'>
             <HeaderText1
@@ -157,6 +159,35 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className='z-[4] mt-[120px] flex-grow bg-[#f3f4f5] py-12'>
+        <div className='mx-auto w-full max-w-7xl px-20 text-center'>
+          <BeforeFooterText
+            header='For every kind of trip and every destination'
+            paragraph="Wanderlog is the best free planning app for any trip you might have in mind. It's:"
+          />
+          <div className='-mx-4 flex flex-wrap border-b-[1px] border-solid border-[#e9ecef] py-12'>
+            <div className='relative mt-4 w-full max-w-[33.33%] px-4 text-center'>
+              <BeforeFooterText
+                header='The best road trip planner'
+                paragraph='Use Wanderlog as a route map showing directions, distances, and driving times between different attractions you might want to visit.'
+              />
+            </div>
+            <div className='relative mt-4 w-full max-w-[33.33%] px-4 text-center'>
+              <BeforeFooterText
+                header='The best vacation planner'
+                paragraph='Use Wanderlog to map your journey to figure out the best routes, keep track of hotel and flight bookings and reservations, and read guides from other trip planning websites.'
+              />
+            </div>
+            <div className='relative mt-4 w-full max-w-[33.33%] px-4 text-center'>
+              <BeforeFooterText
+                header='The best couple itinerary planner'
+                paragraph='Use Wanderlog to share your itinerary with tripmates, friends, and families and collaborate in real time, so everyone stays in the loop.'
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </main>
   );
 }
