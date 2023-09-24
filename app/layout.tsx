@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={source_sans_3.className}>
         <Header />
         {children}
+        <div id='modal'></div>
       </body>
     </html>
   );

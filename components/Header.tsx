@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import LoginModal from './LoginModal';
 
 const Header = () => {
   return (
@@ -27,12 +28,7 @@ const Header = () => {
               <ul className='flex flex-row'>
                 <div className='flex flex-row items-center'>
                   <li className='mr-4'>
-                    <Link
-                      href='#'
-                      className='rounded-lg px-2 py-3 text-sm font-bold leading-none hover:bg-[var(--white-hover)]'
-                    >
-                      Log in
-                    </Link>
+                    <LoginModal />
                   </li>
                   <li className='mr-4'>
                     <Link
