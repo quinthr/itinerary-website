@@ -12,7 +12,7 @@ const buttonClasses = cva(
     'py-3',
     'min-w-[56px]',
     'px-6',
-    'pointer',
+    'cursor-pointer',
     'rounded-[100px]',
   ],
   {
