@@ -1,6 +1,10 @@
 import clsx from 'clsx';
+import React, { InputHTMLAttributes } from 'react';
 
-const LoginInput = ({ className, ...props }: { className: String }) => {
+const LoginInput = ({
+  className,
+  ...props
+}: { className: String } & InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <>
       <input
