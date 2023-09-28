@@ -5,22 +5,27 @@ import Modal from 'react-modal';
 import Link from 'next/link';
 import LoginInput from './LoginInput';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { signup } from '@/lib/api';
 
 Modal.setAppElement('#modal');
 
 type Inputs = {
   email: string;
+  username: string;
   password: string;
 };
 
-const LoginModal = () => {
+const SignupModal = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [focusInput, setFocusInput] = useState(true);
+  const [focusInputUsername, setFocusInputUsername] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const openModal = () => {
     setIsOpen(true);
     document.body.style.overflow = 'hidden';
@@ -35,8 +40,14 @@ const LoginModal = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      console.log(data);
+      await signup(data);
+      //router.replace('/home');
+    } catch (e) {
+      console.log();
+    }
     closeModal();
   };
 
@@ -44,10 +55,10 @@ const LoginModal = () => {
     <>
       <Link
         href='#'
-        className='rounded-lg px-2 py-3 text-sm font-bold leading-none hover:bg-[var(--white-hover)]'
+        className='leading-nones rounded-3xl bg-[var(--orange)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--orange-hover)]'
         onClick={() => openModal()}
       >
-        Log in
+        Sign up
       </Link>
       <Modal
         isOpen={modalIsOpen}
@@ -60,7 +71,7 @@ const LoginModal = () => {
             <div className='pb-6'>
               <div className='m-6 text-center'>
                 <div className='mb-0 text-2xl font-bold leading-none tracking-tight'>
-                  Log in to Wanderlog
+                  Sign up to take your trip planning to the next level
                 </div>
               </div>
             </div>
@@ -76,8 +87,10 @@ const LoginModal = () => {
                           <span>Email</span>
                         </div>
                       </div>
-                      <LoginInput
+                      <input
+                        className='loginInput'
                         type='email'
+                        {...register('email', { required: true })}
                         onFocus={(e) => {
                           setFocusInput(false);
                           e.target.classList.add('loginForm-input-focus');
@@ -88,14 +101,35 @@ const LoginModal = () => {
                             setFocusInput(true);
                           }
                         }}
-                        className=''
-                        {...(register('email'),
-                        { required: true, maxLength: 128 })}
-                        aria-invalid={errors.email ? 'true' : 'false'}
                       />
-                      {errors.email?.type === 'required' && (
-                        <p role='alert'>Email is required</p>
-                      )}
+                    </div>
+                  </div>
+                  <div className='mb-2'>
+                    <div className='relative flex items-center rounded-lg'>
+                      <div className='pointer-events-none absolute flex h-full w-full items-center px-4 font-normal text-[#6c757d]'>
+                        <div
+                          className={
+                            focusInputUsername ? '' : 'loginForm-label-focus'
+                          }
+                        >
+                          <span>Username</span>
+                        </div>
+                      </div>
+                      <input
+                        className='loginInput'
+                        {...register('username', { required: true })}
+                        type='text'
+                        onFocus={(e) => {
+                          setFocusInputUsername(false);
+                          e.target.classList.add('loginForm-input-focus');
+                        }}
+                        onBlur={(e) => {
+                          e.target.classList.remove('loginForm-input-focus');
+                          if (e.target.value === '') {
+                            setFocusInputUsername(true);
+                          }
+                        }}
+                      />
                     </div>
                   </div>
                   <div className='mb-2'>
@@ -109,7 +143,9 @@ const LoginModal = () => {
                           <span>Password</span>
                         </div>
                       </div>
-                      <LoginInput
+                      <input
+                        className='loginInput'
+                        {...register('password', { required: true })}
                         type={showPassword ? 'text' : 'password'}
                         onFocus={(e) => {
                           e.target.classList.add('loginForm-input-focus');
@@ -121,13 +157,7 @@ const LoginModal = () => {
                             setFocusInputPassword(true);
                           }
                         }}
-                        className=''
-                        {...(register('password'), { required: true })}
-                        aria-invalid={errors.password ? 'true' : 'false'}
                       />
-                      {errors.password?.type === 'required' && (
-                        <p role='alert'>Password is required</p>
-                      )}
                       <div className='absolute right-2 flex-shrink-0'>
                         <button
                           onClick={(e) => {
@@ -153,20 +183,13 @@ const LoginModal = () => {
                         </button>
                       </div>
                     </div>
-                    <LoginButton
-                      className='text-[#6c757d]'
-                      type='button'
-                      tabIndex={0}
-                    >
-                      Forget Password
-                    </LoginButton>
                   </div>
                   <LoginButton
-                    className=' text-[#3f52e3]'
+                    className=' font-bold text-[#495057]'
                     type='submit'
                     tabIndex={0}
                   >
-                    Login
+                    Sign up with email
                   </LoginButton>
                 </form>
                 <LoginButton
@@ -174,7 +197,7 @@ const LoginModal = () => {
                   type='button'
                   tabIndex={0}
                 >
-                  Don&apos;t have an account yet? <strong>Sign up</strong>
+                  Already have an account? <strong>Log in</strong>
                 </LoginButton>
               </div>
             </div>
@@ -185,4 +208,4 @@ const LoginModal = () => {
   );
 };
 
-export default LoginModal;
+export default SignupModal;

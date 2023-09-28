@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import LoginModal from './LoginModal';
+import SignupModal from './SignupModal';
 
 const Header = () => {
   return (
@@ -31,12 +32,7 @@ const Header = () => {
                     <LoginModal />
                   </li>
                   <li className='mr-4'>
-                    <Link
-                      href='#'
-                      className='leading-nones rounded-3xl bg-[var(--orange)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--orange-hover)]'
-                    >
-                      Sign up
-                    </Link>
+                    <SignupModal />
                   </li>
                 </div>
               </ul>
