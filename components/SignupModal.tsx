@@ -4,12 +4,18 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import Link from 'next/link';
 import LoginInput from './LoginInput';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import {
+  useForm,
+  SubmitHandler,
+  useFieldArray,
+  FieldErrors,
+} from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { signup } from '@/lib/api';
+import ErrorMessage from './ErrorMessage';
 
 Modal.setAppElement('#modal');
 
@@ -17,6 +23,7 @@ type Inputs = {
   email: string;
   username: string;
   password: string;
+  global?: string;
 };
 
 const SignupModal = () => {
@@ -25,6 +32,7 @@ const SignupModal = () => {
   const [focusInputUsername, setFocusInputUsername] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [rerender, setRerender] = useState(false);
   const router = useRouter();
   const openModal = () => {
     setIsOpen(true);
@@ -38,17 +46,31 @@ const SignupModal = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      console.log(data);
-      await signup(data);
-      //router.replace('/home');
-    } catch (e) {
-      console.log();
+      const response = await signup(data);
+      if (response.statusCode !== 200) {
+        setError('root.serverError', {
+          type: response.statusCode,
+          message: 'An error occurred while submitting the form.',
+        });
+      }
+      router.replace('/home');
+    } catch (errors) {
+      console.log(errors);
     }
     closeModal();
+  };
+
+  const onError = (errors: FieldErrors<Inputs>) => {
+    console.log('Form errors', errors);
+    setError('global', {
+      type: 'custom',
+      message: 'An error occurred while submitting the form.',
+    });
   };
 
   return (
@@ -77,7 +99,11 @@ const SignupModal = () => {
             </div>
             <div className='flex justify-center'>
               <div className='w-80'>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form
+                  onSubmit={handleSubmit(onSubmit, onError)}
+                  autoComplete='off'
+                  noValidate
+                >
                   <div className='mb-2'>
                     <div className='relative flex items-center rounded-lg'>
                       <div className='pointer-events-none absolute flex h-full w-full items-center px-4 font-normal text-[#6c757d]'>
@@ -90,7 +116,13 @@ const SignupModal = () => {
                       <input
                         className='loginInput'
                         type='email'
-                        {...register('email', { required: true })}
+                        {...register('email', {
+                          required: 'Please enter your email address',
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: 'Invalid email address',
+                          },
+                        })}
                         onFocus={(e) => {
                           setFocusInput(false);
                           e.target.classList.add('loginForm-input-focus');
@@ -103,6 +135,7 @@ const SignupModal = () => {
                         }}
                       />
                     </div>
+                    <ErrorMessage>{errors.email?.message}</ErrorMessage>
                   </div>
                   <div className='mb-2'>
                     <div className='relative flex items-center rounded-lg'>
@@ -117,7 +150,18 @@ const SignupModal = () => {
                       </div>
                       <input
                         className='loginInput'
-                        {...register('username', { required: true })}
+                        {...register('username', {
+                          required: 'Please enter your username.',
+                          minLength: {
+                            value: 3,
+                            message: 'Your username must exceed 3 characters',
+                          },
+                          maxLength: {
+                            value: 24,
+                            message:
+                              'Your username must not exceed 24 characters',
+                          },
+                        })}
                         type='text'
                         onFocus={(e) => {
                           setFocusInputUsername(false);
@@ -131,6 +175,7 @@ const SignupModal = () => {
                         }}
                       />
                     </div>
+                    <ErrorMessage>{errors.username?.message}</ErrorMessage>
                   </div>
                   <div className='mb-2'>
                     <div className='relative flex items-center rounded-lg'>
@@ -145,7 +190,13 @@ const SignupModal = () => {
                       </div>
                       <input
                         className='loginInput'
-                        {...register('password', { required: true })}
+                        {...register('password', {
+                          required: 'Please enter your password.',
+                          minLength: {
+                            value: 3,
+                            message: 'Your password must exceed 3 characters',
+                          },
+                        })}
                         type={showPassword ? 'text' : 'password'}
                         onFocus={(e) => {
                           e.target.classList.add('loginForm-input-focus');
@@ -183,7 +234,9 @@ const SignupModal = () => {
                         </button>
                       </div>
                     </div>
+                    <ErrorMessage>{errors.password?.message}</ErrorMessage>
                   </div>
+                  <ErrorMessage>{errors.global?.message}</ErrorMessage>
                   <LoginButton
                     className=' font-bold text-[#495057]'
                     type='submit'
