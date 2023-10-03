@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import HomeHeader from '@/components/HomeHeader';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Source_Sans_3 } from 'next/font/google';
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={source_sans_3.className}>
-        <Header />
+        <HomeHeader />
         {children}
         <div id='modal'></div>
       </body>

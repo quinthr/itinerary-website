@@ -32,6 +32,13 @@ const Header = () => {
                     <LoginModal />
                   </li>
                   <li className='mr-4'>
+                    <Link
+                      href='#'
+                      className='leading-nones rounded-3xl bg-[var(--orange)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--orange-hover)]'
+                      onClick={() => openModal()}
+                    >
+                      Sign up
+                    </Link>
                     <SignupModal />
                   </li>
                 </div>

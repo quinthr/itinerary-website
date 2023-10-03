@@ -3,19 +3,14 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import Link from 'next/link';
-import LoginInput from './LoginInput';
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  FieldErrors,
-} from 'react-hook-form';
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { signup } from '@/lib/api';
 import ErrorMessage from './ErrorMessage';
+import LoginModal from './LoginModal';
 
 Modal.setAppElement('#modal');
 
@@ -23,7 +18,6 @@ type Inputs = {
   email: string;
   username: string;
   password: string;
-  global?: string;
 };
 
 const SignupModal = () => {
@@ -46,27 +40,33 @@ const SignupModal = () => {
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    clearErrors('root.ServerError');
     try {
-      const response = await signup(data);
-      if (response.statusCode !== 200) {
-        setError('root.serverError', {
-          type: response.statusCode,
-          message: 'An error occurred while submitting the form.',
+      await signup(data);
+      closeModal();
+      router.replace('/home');
+    } catch (error: any) {
+      if (error.message === 'Username already exists') {
+        setError('root.ServerError', {
+          type: 'custom',
+          message: error.message,
+        });
+      } else if (error.message === 'Email already been used') {
+        setError('root.ServerError', {
+          type: 'custom',
+          message: error.message,
         });
       }
-      router.replace('/home');
-    } catch (errors) {
-      console.log(errors);
     }
-    closeModal();
   };
 
   const onError = (errors: FieldErrors<Inputs>) => {
     console.log('Form errors', errors);
-    setError('global', {
+    setError('root.ServerError', {
       type: 'custom',
       message:
         "Some fields don't seem to be filled in correctly! Please try again.",
@@ -236,7 +236,9 @@ const SignupModal = () => {
                     </div>
                     <ErrorMessage>{errors.password?.message}</ErrorMessage>
                   </div>
-                  <ErrorMessage>{errors.global?.message}</ErrorMessage>
+                  <ErrorMessage>
+                    {errors.root?.ServerError?.message}
+                  </ErrorMessage>
                   <LoginButton
                     className=' font-bold text-[#495057] hover:text-[#3f52e3]'
                     type='submit'
@@ -249,6 +251,10 @@ const SignupModal = () => {
                   className=' mt-4 text-[#495057] hover:text-[#3f52e3]'
                   type='button'
                   tabIndex={0}
+                  onClick={() => {
+                    /* Open Login Modal */
+                    closeModal();
+                  }}
                 >
                   Already have an account? <strong>Log in</strong>
                 </LoginButton>
