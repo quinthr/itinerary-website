@@ -10,6 +10,7 @@ const buttonClasses = cva([
   'bg-transparent',
   'p-1',
   'px-4',
+  'text-sm',
 ]);
 
 export interface ButtonProps
@@ -23,7 +24,7 @@ const LoginButton: FC<ButtonProps> = ({ children, className, ...props }) => {
     <>
       <button className={buttonClasses({ className })} {...props}>
         <div className='flex-shrink flex-grow'>
-          <div className='flex items-center justify-center text-xs font-bold'>
+          <div className='flex items-center justify-center'>
             <span className='flex-shrink overflow-hidden text-ellipsis whitespace-nowrap'>
               {children}
             </span>

@@ -154,7 +154,7 @@ const LoginModal = () => {
                       </div>
                     </div>
                     <LoginButton
-                      className='text-[#6c757d]'
+                      className='text-xs font-bold text-[#6c757d] hover:text-[#495057]'
                       type='button'
                       tabIndex={0}
                     >
@@ -162,7 +162,7 @@ const LoginModal = () => {
                     </LoginButton>
                   </div>
                   <LoginButton
-                    className=' text-[#3f52e3]'
+                    className=' font-bold text-[#495057] hover:text-[#3f52e3]'
                     type='submit'
                     tabIndex={0}
                   >
@@ -170,7 +170,7 @@ const LoginModal = () => {
                   </LoginButton>
                 </form>
                 <LoginButton
-                  className=' mt-4 text-[#495057]'
+                  className=' mt-4 text-[#495057] hover:text-[#3f52e3]'
                   type='button'
                   tabIndex={0}
                 >

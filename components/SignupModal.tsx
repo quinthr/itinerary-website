@@ -32,7 +32,6 @@ const SignupModal = () => {
   const [focusInputUsername, setFocusInputUsername] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [rerender, setRerender] = useState(false);
   const router = useRouter();
   const openModal = () => {
     setIsOpen(true);
@@ -69,7 +68,8 @@ const SignupModal = () => {
     console.log('Form errors', errors);
     setError('global', {
       type: 'custom',
-      message: 'An error occurred while submitting the form.',
+      message:
+        "Some fields don't seem to be filled in correctly! Please try again.",
     });
   };
 
@@ -238,7 +238,7 @@ const SignupModal = () => {
                   </div>
                   <ErrorMessage>{errors.global?.message}</ErrorMessage>
                   <LoginButton
-                    className=' font-bold text-[#495057]'
+                    className=' font-bold text-[#495057] hover:text-[#3f52e3]'
                     type='submit'
                     tabIndex={0}
                   >
@@ -246,7 +246,7 @@ const SignupModal = () => {
                   </LoginButton>
                 </form>
                 <LoginButton
-                  className=' mt-4 text-[#495057]'
+                  className=' mt-4 text-[#495057] hover:text-[#3f52e3]'
                   type='button'
                   tabIndex={0}
                 >
