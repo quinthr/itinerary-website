@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Modal from 'react-modal';
-import Link from 'next/link';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
@@ -20,21 +19,21 @@ type Inputs = {
   password: string;
 };
 
-const SignupModal = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+const SignupModal = ({
+  modalIsOpen,
+  closeModal,
+  openLoginModal,
+}: {
+  modalIsOpen: boolean;
+  closeModal: () => void;
+  openLoginModal: () => void;
+}) => {
   const [focusInput, setFocusInput] = useState(true);
   const [focusInputUsername, setFocusInputUsername] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const openModal = () => {
-    setIsOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-    document.body.style.overflow = 'unset';
-  };
+
   const {
     register,
     handleSubmit,
@@ -43,6 +42,11 @@ const SignupModal = () => {
     clearErrors,
   } = useForm<Inputs>();
 
+  const onClose = () => {
+    closeModal();
+    clearErrors();
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     clearErrors('root.ServerError');
     try {
@@ -50,17 +54,10 @@ const SignupModal = () => {
       closeModal();
       router.replace('/home');
     } catch (error: any) {
-      if (error.message === 'Username already exists') {
-        setError('root.ServerError', {
-          type: 'custom',
-          message: error.message,
-        });
-      } else if (error.message === 'Email already been used') {
-        setError('root.ServerError', {
-          type: 'custom',
-          message: error.message,
-        });
-      }
+      setError('root.ServerError', {
+        type: 'custom',
+        message: error.message,
+      });
     }
   };
 
@@ -75,16 +72,9 @@ const SignupModal = () => {
 
   return (
     <>
-      <Link
-        href='#'
-        className='leading-nones rounded-3xl bg-[var(--orange)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--orange-hover)]'
-        onClick={() => openModal()}
-      >
-        Sign up
-      </Link>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={onClose}
         overlayClassName='bg-[rgba(0,0,0,.4)] z-[1050] overflow-hidden overflow-y-scroll flex justify-center items-center absolute top-0 left-0 h-screen w-screen'
         className='pointer-events-auto relative flex w-3/4 max-w-[448px] rounded-3xl border-[#00000033] bg-white bg-clip-padding p-8 shadow-2xl outline-0'
       >
@@ -253,7 +243,9 @@ const SignupModal = () => {
                   tabIndex={0}
                   onClick={() => {
                     /* Open Login Modal */
+                    clearErrors();
                     closeModal();
+                    openLoginModal();
                   }}
                 >
                   Already have an account? <strong>Log in</strong>

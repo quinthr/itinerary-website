@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import LoginModal from './LoginModal';
-import SignupModal from './SignupModal';
+import HeaderModals from './HeaderModals';
 
 const Header = () => {
   return (
@@ -27,21 +26,7 @@ const Header = () => {
                 </div>
               </a>
               <ul className='flex flex-row'>
-                <div className='flex flex-row items-center'>
-                  <li className='mr-4'>
-                    <LoginModal />
-                  </li>
-                  <li className='mr-4'>
-                    <Link
-                      href='#'
-                      className='leading-nones rounded-3xl bg-[var(--orange)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--orange-hover)]'
-                      onClick={() => openModal()}
-                    >
-                      Sign up
-                    </Link>
-                    <SignupModal />
-                  </li>
-                </div>
+                <HeaderModals />
               </ul>
             </div>
           </div>

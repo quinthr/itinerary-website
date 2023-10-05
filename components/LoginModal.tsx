@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Modal from 'react-modal';
-import Link from 'next/link';
 import LoginInput from './LoginInput';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import LoginButton from './LoginButton';
@@ -16,24 +15,31 @@ type Inputs = {
   password: string;
 };
 
-const LoginModal = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+const LoginModal = ({
+  modalIsOpen,
+  closeModal,
+  openSignupModal,
+}: {
+  modalIsOpen: boolean;
+  closeModal: () => void;
+  openSignupModal: () => void;
+}) => {
   const [focusInput, setFocusInput] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const openModal = () => {
-    setIsOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-    document.body.style.overflow = 'unset';
-  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<Inputs>();
+
+  const onClose = () => {
+    closeModal();
+    clearErrors();
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
@@ -42,16 +48,9 @@ const LoginModal = () => {
 
   return (
     <>
-      <Link
-        href='#'
-        className='rounded-lg px-2 py-3 text-sm font-bold leading-none hover:bg-[var(--white-hover)]'
-        onClick={() => openModal()}
-      >
-        Log in
-      </Link>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={onClose}
         overlayClassName='bg-[rgba(0,0,0,.4)] z-[1050] overflow-hidden overflow-y-scroll flex justify-center items-center absolute top-0 left-0 h-screen w-screen'
         className='pointer-events-auto relative flex w-3/4 max-w-[448px] rounded-3xl border-[#00000033] bg-white bg-clip-padding p-8 shadow-2xl outline-0'
       >
@@ -173,6 +172,12 @@ const LoginModal = () => {
                   className=' mt-4 text-[#495057] hover:text-[#3f52e3]'
                   type='button'
                   tabIndex={0}
+                  onClick={() => {
+                    /* Open Signup Modal */
+                    clearErrors();
+                    closeModal();
+                    openSignupModal();
+                  }}
                 >
                   Don&apos;t have an account yet? <strong>Sign up</strong>
                 </LoginButton>

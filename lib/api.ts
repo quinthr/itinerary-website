@@ -21,16 +21,7 @@ export const fetcher = async ({
   });
   let data = await res.json();
   if (!res.ok) {
-    //handle errors
-    if (res.status === 409 && data.message === 'Username already exists') {
-      throw new Error(data.message);
-    } else if (
-      res.status === 409 &&
-      data.message === 'Email already been used'
-    ) {
-      throw new Error(data.message);
-    }
-    throw new Error('API error');
+    throw new Error(data.message);
   }
 
   if (json) {
