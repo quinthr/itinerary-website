@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { signup } from '@/lib/api';
 import ErrorMessage from './ErrorMessage';
-import LoginModal from './LoginModal';
 
 Modal.setAppElement('#modal');
 

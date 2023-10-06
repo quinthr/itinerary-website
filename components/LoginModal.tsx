@@ -3,15 +3,18 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import LoginInput from './LoginInput';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { signin } from '@/lib/api';
+import ErrorMessage from './ErrorMessage';
 
 Modal.setAppElement('#modal');
 
 type Inputs = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -27,6 +30,7 @@ const LoginModal = ({
   const [focusInput, setFocusInput] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -41,9 +45,28 @@ const LoginModal = ({
     clearErrors();
   };
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    closeModal();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    clearErrors('root.ServerError');
+    try {
+      await signin(data);
+      console.log('result');
+      closeModal();
+      router.replace('/home');
+    } catch (error: any) {
+      setError('root.ServerError', {
+        type: 'custom',
+        message: error.message,
+      });
+    }
+  };
+
+  const onError = (errors: FieldErrors<Inputs>) => {
+    console.log('Form errors', errors);
+    setError('root.ServerError', {
+      type: 'custom',
+      message:
+        "Some fields don't seem to be filled in correctly! Please try again.",
+    });
   };
 
   return (
@@ -65,18 +88,26 @@ const LoginModal = ({
             </div>
             <div className='flex justify-center'>
               <div className='w-80'>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form
+                  onSubmit={handleSubmit(onSubmit, onError)}
+                  autoComplete='off'
+                  noValidate
+                >
                   <div className='mb-2'>
                     <div className='relative flex items-center rounded-lg'>
                       <div className='pointer-events-none absolute flex h-full w-full items-center px-4 font-normal text-[#6c757d]'>
                         <div
                           className={focusInput ? '' : 'loginForm-label-focus'}
                         >
-                          <span>Email</span>
+                          <span>Username/Email Address</span>
                         </div>
                       </div>
-                      <LoginInput
-                        type='email'
+                      <input
+                        className='loginInput'
+                        type='text'
+                        {...register('username', {
+                          required: 'Please enter your username/email address',
+                        })}
                         onFocus={(e) => {
                           setFocusInput(false);
                           e.target.classList.add('loginForm-input-focus');
@@ -87,15 +118,9 @@ const LoginModal = ({
                             setFocusInput(true);
                           }
                         }}
-                        className=''
-                        {...(register('email'),
-                        { required: true, maxLength: 128 })}
-                        aria-invalid={errors.email ? 'true' : 'false'}
                       />
-                      {errors.email?.type === 'required' && (
-                        <p role='alert'>Email is required</p>
-                      )}
                     </div>
+                    <ErrorMessage>{errors.username?.message}</ErrorMessage>
                   </div>
                   <div className='mb-2'>
                     <div className='relative flex items-center rounded-lg'>
@@ -108,7 +133,11 @@ const LoginModal = ({
                           <span>Password</span>
                         </div>
                       </div>
-                      <LoginInput
+                      <input
+                        className='loginInput'
+                        {...register('password', {
+                          required: 'Please enter your password.',
+                        })}
                         type={showPassword ? 'text' : 'password'}
                         onFocus={(e) => {
                           e.target.classList.add('loginForm-input-focus');
@@ -120,13 +149,7 @@ const LoginModal = ({
                             setFocusInputPassword(true);
                           }
                         }}
-                        className=''
-                        {...(register('password'), { required: true })}
-                        aria-invalid={errors.password ? 'true' : 'false'}
                       />
-                      {errors.password?.type === 'required' && (
-                        <p role='alert'>Password is required</p>
-                      )}
                       <div className='absolute right-2 flex-shrink-0'>
                         <button
                           onClick={(e) => {
@@ -152,6 +175,7 @@ const LoginModal = ({
                         </button>
                       </div>
                     </div>
+                    <ErrorMessage>{errors.password?.message}</ErrorMessage>
                     <LoginButton
                       className='text-xs font-bold text-[#6c757d] hover:text-[#495057]'
                       type='button'
@@ -168,6 +192,7 @@ const LoginModal = ({
                     Login
                   </LoginButton>
                 </form>
+                <ErrorMessage>{errors.root?.ServerError?.message}</ErrorMessage>
                 <LoginButton
                   className=' mt-4 text-[#495057] hover:text-[#3f52e3]'
                   type='button'
