@@ -54,6 +54,10 @@ body {
   */
 }
 
+.loginInput {
+  @apply block h-14 w-full text-ellipsis rounded-lg border-2 border-solid border-gray-200 bg-white bg-clip-padding px-4 pb-4 pt-7 text-base font-normal leading-6 text-gray-600 shadow-none;
+}
+
 .loginForm-label-focus {
   color: #212529;
   font-size: 75%;
@@ -75,8 +79,33 @@ body {
   outline: 0;
 }
 
-.loginInput {
-  @apply block h-14 w-full text-ellipsis rounded-lg border-2 border-solid border-gray-200 bg-white bg-clip-padding px-4 pb-4 pt-7 text-base font-normal leading-6 text-gray-600 shadow-none;
+.react-autosuggest__input {
+  letter-spacing: 0;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  line-height: 1.5;
+  background-clip: padding-box;
+  font-weight: 400;
+  font-size: 1rem;
+  display: block;
+  color: #495057;
+  width: 100%;
+  text-overflow: ellipsis;
+  padding: 28px 16px 16px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding-top: 0;
+  padding-left: 48px;
+  padding-bottom: 0;
+  height: 48px;
+  box-shadow: none;
+  border-width: 0;
+  background-color: #f3f4f5;
+}
+
+.react-autosuggest__container {
+  width: 100%;
 }
 
 @keyframes CardAnimation0 {

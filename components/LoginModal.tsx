@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Modal from 'react-modal';
-import LoginInput from './LoginInput';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import LoginButton from './LoginButton';
@@ -22,10 +21,12 @@ const LoginModal = ({
   modalIsOpen,
   closeModal,
   openSignupModal,
+  openForgetModal,
 }: {
   modalIsOpen: boolean;
   closeModal: () => void;
   openSignupModal: () => void;
+  openForgetModal: () => void;
 }) => {
   const [focusInput, setFocusInput] = useState(true);
   const [focusInputPassword, setFocusInputPassword] = useState(true);
@@ -38,18 +39,21 @@ const LoginModal = ({
     formState: { errors },
     setError,
     clearErrors,
+    reset,
   } = useForm<Inputs>();
 
   const onClose = () => {
-    closeModal();
+    setFocusInput(true);
+    setFocusInputPassword(true);
+    reset();
     clearErrors();
+    closeModal();
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     clearErrors('root.ServerError');
     try {
       await signin(data);
-      console.log('result');
       closeModal();
       router.replace('/home');
     } catch (error: any) {
@@ -180,6 +184,12 @@ const LoginModal = ({
                       className='text-xs font-bold text-[#6c757d] hover:text-[#495057]'
                       type='button'
                       tabIndex={0}
+                      onClick={() => {
+                        /* Open Signup Modal */
+                        clearErrors();
+                        closeModal();
+                        openForgetModal();
+                      }}
                     >
                       Forget Password
                     </LoginButton>

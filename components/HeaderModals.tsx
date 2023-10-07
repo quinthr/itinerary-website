@@ -5,11 +5,10 @@ import Modal from 'react-modal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import Link from 'next/link';
+import ForgetPasswordModal from './ForgetPasswordModal';
 
 const HeaderModals = () => {
   const [loginModalIsOpen, setLoginIsOpen] = useState(false);
-  const [signupModalIsOpen, setSignupIsOpen] = useState(false);
-
   const openLoginModal = () => {
     setLoginIsOpen(true);
     document.body.style.overflow = 'hidden';
@@ -19,12 +18,23 @@ const HeaderModals = () => {
     document.body.style.overflow = 'unset';
   };
 
+  const [signupModalIsOpen, setSignupIsOpen] = useState(false);
   const openSignupModal = () => {
     setSignupIsOpen(true);
     document.body.style.overflow = 'hidden';
   };
   const closeSignupModal = () => {
     setSignupIsOpen(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  const [forgetModalIsOpen, setForgetIsOpen] = useState(false);
+  const openForgetModal = () => {
+    setForgetIsOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+  const closeForgetModal = () => {
+    setForgetIsOpen(false);
     document.body.style.overflow = 'unset';
   };
 
@@ -43,6 +53,7 @@ const HeaderModals = () => {
             modalIsOpen={loginModalIsOpen}
             closeModal={closeLoginModal}
             openSignupModal={openSignupModal}
+            openForgetModal={openForgetModal}
           />
         </li>
         <li className='mr-4'>
@@ -59,6 +70,11 @@ const HeaderModals = () => {
             openLoginModal={openLoginModal}
           />
         </li>
+        <ForgetPasswordModal
+          modalIsOpen={forgetModalIsOpen}
+          closeModal={closeForgetModal}
+          openLoginModal={openLoginModal}
+        />
       </div>
     </>
   );

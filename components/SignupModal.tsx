@@ -39,11 +39,16 @@ const SignupModal = ({
     formState: { errors },
     setError,
     clearErrors,
+    reset,
   } = useForm<Inputs>();
 
   const onClose = () => {
-    closeModal();
+    reset();
+    setFocusInput(true);
+    setFocusInputPassword(true);
+    setFocusInputPassword(true);
     clearErrors();
+    closeModal();
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

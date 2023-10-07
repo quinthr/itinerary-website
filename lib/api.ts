@@ -11,7 +11,6 @@ export const fetcher = async ({
   body,
   json = true,
 }: FetcherParams): Promise<any> => {
-  console.log('FETCHER CALLED');
   const res = await fetch(url, {
     method,
     ...(body && { body: JSON.stringify(body) }),
@@ -21,7 +20,6 @@ export const fetcher = async ({
     },
   });
 
-  console.log(res);
   if (!res.ok) {
     let data = await res.json();
     throw new Error(data.message);
@@ -33,8 +31,7 @@ export const fetcher = async ({
   }
 };
 
-export const signup = (data) => {
-  console.log(data);
+export const signup = (data: any) => {
   return fetcher({
     url: 'http://localhost:3002/user',
     method: 'post',
@@ -42,11 +39,17 @@ export const signup = (data) => {
   });
 };
 
-export const signin = (data) => {
-  console.log(data);
-  console.log('API CALLED');
+export const signin = (data: any) => {
   return fetcher({
     url: 'http://localhost:3002/signin',
+    method: 'post',
+    body: data,
+  });
+};
+
+export const forgetPassword = (data: any) => {
+  return fetcher({
+    url: 'http://localhost:3002/forgetPassword',
     method: 'post',
     body: data,
   });
