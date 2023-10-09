@@ -44,12 +44,12 @@ const HeaderSearch = () => {
     setSuggestions([]);
   };
 
-  const onChange = (event, { newValue }) => {
+  const onChange = (event: any, { newValue }: { newValue: any }) => {
     setValue(newValue);
   };
 
   const inputProps = {
-    placeholder: 'Type a place',
+    placeholder: 'Enter a place',
     value: value,
     onChange: onChange,
   };

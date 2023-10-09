@@ -8,10 +8,7 @@ const buttonClasses = cva(
     'inline-flex',
     'min-h-[32px]',
     'border-1',
-    'h-14',
     'py-3',
-    'min-w-[56px]',
-    'px-6',
     'cursor-pointer',
     'rounded-[100px]',
   ],
@@ -54,7 +51,7 @@ const AnchorButton: FC<AnchorProps> = ({
       <a className={buttonClasses({ intent, className })} {...props}>
         <div className='flex-shrink-1 min-w-0 flex-grow'>
           <div className='flex min-w-0 items-center justify-center text-base font-bold'>
-            <span className='overflow-hidden text-ellipsis whitespace-nowrap'>
+            <span className='flex overflow-hidden text-ellipsis whitespace-nowrap'>
               {children}
             </span>
           </div>

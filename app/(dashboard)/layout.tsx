@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import HomeHeader from '@/components/HomeHeader';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
@@ -21,6 +22,7 @@ export default function RootLayout({
         <HomeHeader />
         {children}
         <div id='modal'></div>
+        <Footer />
       </body>
     </html>
   );

@@ -42,7 +42,7 @@ const HomeHeader = () => {
                         <li className='mr-2' key={nav.name}>
                           <Link
                             href={nav.link}
-                            className='flex h-16 cursor-pointer items-center rounded-none border-b-2 border-solid border-white px-2 py-3 text-center text-sm font-bold text-[#212529] transition-all duration-200 ease-in-out'
+                            className='flex h-16 cursor-pointer items-center rounded-none border-b border-solid border-[#e9ecef] px-2 py-3 text-center text-sm font-bold text-[#212529] transition-all duration-200 ease-in-out hover:border-b-2 hover:border-[#de503a]'
                           >
                             {nav.name}
                           </Link>

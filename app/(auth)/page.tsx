@@ -65,7 +65,12 @@ export default function Home() {
               <SubtitleText content='Build, organize, and map your itineraries in a free travel app designed for vacations & road trips' />
               <div className='mt-6'>
                 <div className='flex'>
-                  <AnchorButton intent='primary'>Start Planning</AnchorButton>
+                  <AnchorButton
+                    intent='primary'
+                    className='h-14 min-w-[56px] px-6'
+                  >
+                    Start Planning
+                  </AnchorButton>
                   <div className='relative ml-4'>
                     <div className='relative'>
                       <Button intent='secondary'>Get the app</Button>
@@ -148,7 +153,12 @@ export default function Home() {
             />
             <div className='mt-6 flex justify-center'>
               <div className='flex'>
-                <AnchorButton intent='primary'>Start Planning</AnchorButton>
+                <AnchorButton
+                  intent='primary'
+                  className='h-14 min-w-[56px] px-6'
+                >
+                  Start Planning
+                </AnchorButton>
                 <div className='relative ml-4'>
                   <div className='relative'>
                     <Button intent='secondary'>Get the app</Button>
