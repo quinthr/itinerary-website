@@ -3,6 +3,7 @@ import AnchorButton from '@/components/AnchorButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import MainFeature from '@/components/MainFeature';
 
 const DashboardHome = () => {
   return (
@@ -39,7 +40,22 @@ const DashboardHome = () => {
         </div>
         <div className='mx-auto w-full max-w-[1140px] px-[15px]'>
           <div className='mx-auto my-20 w-full'>
-            <div className='flex flex-row'></div>
+            <div className='flex flex-row'>
+              <MainFeature
+                className='mr-4'
+                header='Your trips'
+                buttonText='Plan new trip'
+                emptyText="You don't have any trip plans yet."
+                highlightText=' Plan a new trip'
+              />
+              <MainFeature
+                className=''
+                header='Your guides'
+                buttonText='Create new guide'
+                emptyText="You don't have any guides yet."
+                highlightText=' Create a new guide'
+              />
+            </div>
           </div>
         </div>
       </div>
