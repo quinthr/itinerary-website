@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import MainFeature from '@/components/MainFeature';
 import Image from 'next/image';
+import PopularDestination from '@/components/PopularDestination';
 
 const DashboardHome = () => {
   return (
@@ -66,97 +67,10 @@ const DashboardHome = () => {
             <div className='-m-2'>
               <div className='relative'>
                 <div className='transition-height will-change-height relative h-auto w-full outline-none delay-0 duration-300 ease-in-out'>
-                  <div className='flex w-[100%] text-left'>
-                    <div className='h-auto w-[33.33%] flex-1 px-2 py-0 opacity-100'>
-                      <div className='relative cursor-pointer flex-col'>
-                        <div className='flex flex-col'>
-                          <Link href='#' className='block rounded-lg'>
-                            <span className='relative inline-block w-full'>
-                              <Image
-                                src='/cairo.jpeg'
-                                alt='Cairo'
-                                className='align-middle'
-                                width={66}
-                                height={100}
-                                layout='responsive'
-                              />
-                              <span className='absolute bottom-0 left-0 right-0 top-0 block'>
-                                <div className='h-full w-full overflow-hidden rounded-lg'>
-                                  <Image
-                                    src='/cairo.jpeg'
-                                    alt='Cairo'
-                                    className='rounded-lg object-cover align-middle transition-transform delay-300'
-                                    width={100}
-                                    height={100}
-                                    layout='responsive'
-                                  />
-                                </div>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='h-auto w-[33.33%] flex-1 px-2 py-0 opacity-100'>
-                      <div className='relative cursor-pointer flex-col'>
-                        <div className='flex flex-col'>
-                          <Link href='#' className='block rounded-lg'>
-                            <span className='relative inline-block w-full'>
-                              <Image
-                                src='/cairo.jpeg'
-                                alt='Cairo'
-                                className='align-middle'
-                                width={66}
-                                height={100}
-                                layout='responsive'
-                              />
-                              <span className='absolute bottom-0 left-0 right-0 top-0 block'>
-                                <div className='h-full w-full overflow-hidden rounded-lg'>
-                                  <Image
-                                    src='/cairo.jpeg'
-                                    alt='Cairo'
-                                    className='rounded-lg object-cover align-middle transition-transform delay-300'
-                                    width={100}
-                                    height={100}
-                                    layout='responsive'
-                                  />
-                                </div>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='h-auto w-[33.33%] flex-1 px-2 py-0 opacity-100'>
-                      <div className='relative cursor-pointer flex-col'>
-                        <div className='flex flex-col'>
-                          <Link href='#' className='block rounded-lg'>
-                            <span className='relative inline-block w-full'>
-                              <Image
-                                src='/cairo.jpeg'
-                                alt='Cairo'
-                                className='align-middle'
-                                width={66}
-                                height={100}
-                                layout='responsive'
-                              />
-                              <span className='absolute bottom-0 left-0 right-0 top-0 block'>
-                                <div className='h-full w-full overflow-hidden rounded-lg'>
-                                  <Image
-                                    src='/cairo.jpeg'
-                                    alt='Cairo'
-                                    className='rounded-lg object-cover align-middle transition-transform delay-300'
-                                    width={100}
-                                    height={100}
-                                    layout='responsive'
-                                  />
-                                </div>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
+                  <div className='flex w-[60%] text-left'>
+                    <PopularDestination />
+                    <PopularDestination />
+                    <PopularDestination />
                   </div>
                 </div>
               </div>
