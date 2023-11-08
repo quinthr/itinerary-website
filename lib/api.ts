@@ -33,7 +33,7 @@ export const fetcher = async ({
 
 export const signup = (data: any) => {
   return fetcher({
-    url: 'http://localhost:3002/user',
+    url: 'https://itinerary-api-production.up.railway.app/user',
     method: 'post',
     body: data,
   });
@@ -41,7 +41,7 @@ export const signup = (data: any) => {
 
 export const signin = (data: any) => {
   return fetcher({
-    url: 'http://localhost:3002/signin',
+    url: 'https://itinerary-api-production.up.railway.app/signin',
     method: 'post',
     body: data,
   });
@@ -49,7 +49,7 @@ export const signin = (data: any) => {
 
 export const forgetPassword = (data: any) => {
   return fetcher({
-    url: 'http://localhost:3002/forgetPassword',
+    url: 'https://itinerary-api-production.up.railway.app/forgetPassword',
     method: 'post',
     body: data,
   });
